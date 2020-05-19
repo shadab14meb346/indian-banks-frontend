@@ -24,10 +24,11 @@ function Banks() {
 	const [states, setStates] = useState([]);
 	const [districts, setDistricts] = useState([]);
 	const [branches, setBranches] = useState([]);
-	const [selectedBank, setSelectedBank] = useState("");
-	const [selectedState, setSelectedState] = useState("");
-	const [selectedDistrict, setSelectedDistrict] = useState("");
-	const [selectedBranch, setSelectedBranch] = useState("");
+	const [selectedBank, setSelectedBank] = useState(null);
+	const [selectedState, setSelectedState] = useState(null);
+	const [selectedDistrict, setSelectedDistrict] = useState(null);
+	const [selectedBranch, setSelectedBranch] = useState(null);
+	const [branchDetails, setBranchDetails] = useState({});
 	useEffect(() => {
 		async function fetchData() {
 			const response = await fetch(allBanksURL);
@@ -46,7 +47,9 @@ function Banks() {
 			console.log(allStates);
 			setStates(allStates.data);
 		}
-		fetchData();
+		if (selectedBank) {
+			fetchData();
+		}
 	}, [selectedBank]);
 
 	useEffect(() => {
@@ -58,7 +61,9 @@ function Banks() {
 			console.log(allDistricts);
 			setDistricts(allDistricts.data);
 		}
-		fetchData();
+		if (selectedState) {
+			fetchData();
+		}
 	}, [selectedBank, selectedState, selectedDistrict]);
 
 	useEffect(() => {
@@ -70,7 +75,22 @@ function Banks() {
 			console.log(allBranches);
 			setBranches(allBranches.data);
 		}
-		fetchData();
+		if (selectedDistrict) {
+			fetchData();
+		}
+	}, [selectedBank, selectedState, selectedDistrict, selectedBranch]);
+
+	useEffect(() => {
+		const branchDetailsURL = `http://localhost:3001/get-bank?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}&branch=${selectedBranch}`;
+		async function fetchData() {
+			const response = await fetch(branchDetailsURL);
+			const branchDetails = await response.json();
+			console.log(branchDetails);
+			setBranchDetails(branchDetails.data);
+		}
+		if (selectedBranch) {
+			fetchData();
+		}
 	}, [selectedBank, selectedState, selectedDistrict, selectedBranch]);
 	return (
 		<div>
@@ -87,6 +107,7 @@ function Banks() {
 					</option>
 				))}
 			</select>
+
 			<h1>States</h1>
 			<select
 				id='stateName'
@@ -105,11 +126,12 @@ function Banks() {
 					</option>
 				))}
 			</select>
+
 			<h1>Districts</h1>
 			<select
 				id='districtName'
 				onChange={(event) => {
-					handleSelectedDistrict(event, setSelectedState);
+					handleSelectedDistrict(event, setSelectedDistrict);
 				}}>
 				{districts.length ? null : (
 					<option value='bankNotSelected'>District</option>
@@ -127,9 +149,7 @@ function Banks() {
 			<h1>Branches</h1>
 			<select
 				id='branchName'
-				onChange={(event) => {
-					handleSelectedBranch(event, setSelectedState);
-				}}>
+				onChange={(event) => handleSelectedBranch(event, setSelectedBranch)}>
 				{branches.length ? null : (
 					<option value='bankNotSelected'>Branch</option>
 				)}
@@ -142,6 +162,20 @@ function Banks() {
 					</option>
 				))}
 			</select>
+
+			<h1>Branch Details</h1>
+			<div>
+				{Object.entries(branchDetails).map((element) => {
+					const [key, value] = element;
+					return (
+						<div key={key}>
+							<p>
+								<b>{key}&nbsp;</b>: &nbsp;<span>{value}</span>
+							</p>
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 }
