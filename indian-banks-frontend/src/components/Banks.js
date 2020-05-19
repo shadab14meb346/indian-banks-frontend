@@ -2,23 +2,10 @@ import React, { useEffect, useState } from "react";
 
 const allBanksURL = "http://localhost:3001/get-total-no-of-each-banks";
 
-function handleSelectedBank(event, setSelectedBank) {
-	console.log(event.target.value);
-	setSelectedBank(event.target.value);
-}
-function handleSelectedState(event, setSelectedState) {
-	console.log(event.target.value);
-	setSelectedState(event.target.value);
-}
-function handleSelectedDistrict(event, setSelectedDistrict) {
-	console.log(event.target.value);
-	setSelectedDistrict(event.target.value);
+function handleSelect(event, setSelectFunction) {
+	setSelectFunction(event.target.value);
 }
 
-function handleSelectedBranch(event, setSelectedBranch) {
-	console.log(event.target.value);
-	setSelectedBranch(event.target.value);
-}
 function Banks() {
 	const [banks, setBanks] = useState([]);
 	const [states, setStates] = useState([]);
@@ -98,7 +85,7 @@ function Banks() {
 			<select
 				id='banksName'
 				onChange={(event) => {
-					handleSelectedBank(event, setSelectedBank);
+					handleSelect(event, setSelectedBank);
 				}}>
 				<option value='notSelected'>Select Bank Name</option>
 				{banks.map((bank, index) => (
@@ -112,7 +99,7 @@ function Banks() {
 			<select
 				id='stateName'
 				onChange={(event) => {
-					handleSelectedState(event, setSelectedState);
+					handleSelect(event, setSelectedState);
 				}}>
 				{states.length ? null : (
 					<option value='bankNotSelected'>Select a bank first</option>
@@ -131,7 +118,7 @@ function Banks() {
 			<select
 				id='districtName'
 				onChange={(event) => {
-					handleSelectedDistrict(event, setSelectedDistrict);
+					handleSelect(event, setSelectedDistrict);
 				}}>
 				{districts.length ? null : (
 					<option value='bankNotSelected'>District</option>
@@ -149,7 +136,7 @@ function Banks() {
 			<h1>Branches</h1>
 			<select
 				id='branchName'
-				onChange={(event) => handleSelectedBranch(event, setSelectedBranch)}>
+				onChange={(event) => handleSelect(event, setSelectedBranch)}>
 				{branches.length ? null : (
 					<option value='bankNotSelected'>Branch</option>
 				)}
