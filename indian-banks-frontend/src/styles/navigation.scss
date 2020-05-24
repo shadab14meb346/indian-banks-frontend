@@ -1,0 +1,18 @@
+.main-navigation {
+	display: flex;
+	justify-content: space-evenly;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 0 0 5px rgb(148, 146, 146) inset;
+}
+.main-navigation span {
+	padding: 10px;
+	opacity: 0.6;
+	transition: 0.4s;
+	color: #1414c4;
+	font-weight: 500;
+}
+.main-navigation span:hover {
+	font-weight: bold;
+	cursor: pointer;
+	opacity: 1;
+}
