@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Options from '../common/Options';
+import Header from '../common/Header';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
 const localURL = 'http://localhost:3001';
 
 const url = deployedURL;
 const allBanksURL = `${url}/get-all-banks-name-list`;
 
-function handleSelect(event, setSelectFunction) {
+const handleSelect = (event, setSelectFunction) => {
 	setSelectFunction(event.target.value);
-}
+};
 
-function Fetch({ url, children }) {
+const Fetch = ({ url, children }) => {
 	useEffect(() => {
 		async function fetchData() {
 			const response = await fetch(url);
@@ -20,9 +21,9 @@ function Fetch({ url, children }) {
 		fetchData();
 	});
 	return null;
-}
+};
 
-function Banks() {
+const Banks = () => {
 	const [banks, setBanks] = useState(['Select Bank Name']);
 	const [states, setStates] = useState(['Select a bank first']);
 	const [districts, setDistricts] = useState(['Select a state first']);
@@ -154,6 +155,6 @@ function Banks() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Banks;
