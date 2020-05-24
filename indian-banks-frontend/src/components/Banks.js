@@ -1,16 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import Options from '../common/Options';
+const deployedURL = 'https://indian-banks-apis.herokuapp.com';
+const localURL = 'http://localhost:3001';
 
-const allBanksURL = "http://localhost:3001/get-total-no-of-each-banks";
+const url = deployedURL;
+const allBanksURL = `${url}/get-all-banks-name-list`;
 
 function handleSelect(event, setSelectFunction) {
 	setSelectFunction(event.target.value);
 }
 
+function Fetch({ url, children }) {
+	useEffect(() => {
+		async function fetchData() {
+			const response = await fetch(url);
+			const data = await response.json();
+			children(data.data);
+		}
+		fetchData();
+	});
+	return null;
+}
+
 function Banks() {
-	const [banks, setBanks] = useState([]);
-	const [states, setStates] = useState([]);
-	const [districts, setDistricts] = useState([]);
-	const [branches, setBranches] = useState([]);
+	const [banks, setBanks] = useState(['Select Bank Name']);
+	const [states, setStates] = useState(['Select a bank first']);
+	const [districts, setDistricts] = useState(['Select a state first']);
+	const [branches, setBranches] = useState(['Select a district first']);
 	const [selectedBank, setSelectedBank] = useState(null);
 	const [selectedState, setSelectedState] = useState(null);
 	const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -20,19 +36,17 @@ function Banks() {
 		async function fetchData() {
 			const response = await fetch(allBanksURL);
 			const allBanks = await response.json();
-			console.log(allBanks);
-			setBanks(allBanks.data);
+			setBanks(['Select Bank Name', ...allBanks.data]);
 		}
 		fetchData();
 	}, []);
+
 	useEffect(() => {
-		const banksInStatesURL = `https://shadab14meb346-indian-bank-server.glitch.me/get-list-of-states-bank-available-in?bank_name=${selectedBank}`;
-		console.log(banksInStatesURL);
+		const banksInStatesURL = `${url}/get-list-of-states-bank-available-in?bank_name=${selectedBank}`;
 		async function fetchData() {
 			const response = await fetch(banksInStatesURL);
 			const allStates = await response.json();
-			console.log(allStates);
-			setStates(allStates.data);
+			setStates(['State', ...allStates.data.map((bank) => bank.state)]);
 		}
 		if (selectedBank) {
 			fetchData();
@@ -40,114 +54,89 @@ function Banks() {
 	}, [selectedBank]);
 
 	useEffect(() => {
-		const banksInDistrictURL = `https://shadab14meb346-indian-bank-server.glitch.me/get-list-of-districts-bank-available-in?bank_name=${selectedBank}&state=${selectedState}`;
-		console.log(banksInDistrictURL);
+		const banksInDistrictURL = `${url}/get-list-of-districts-bank-available-in?bank_name=${selectedBank}&state=${selectedState}`;
 		async function fetchData() {
 			const response = await fetch(banksInDistrictURL);
 			const allDistricts = await response.json();
-			console.log(allDistricts);
-			setDistricts(allDistricts.data);
+			setDistricts([
+				'District',
+				...allDistricts.data.map((bank) => bank.district)
+			]);
 		}
 		if (selectedState) {
 			fetchData();
 		}
-	}, [selectedBank, selectedState, selectedDistrict]);
+	}, [selectedState]);
 
 	useEffect(() => {
-		const branchesInDistrictURL = `https://shadab14meb346-indian-bank-server.glitch.me/get-list-of-all-bank-branch-available-in?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}`;
-		console.log(branchesInDistrictURL);
+		const branchesInDistrictURL = `${url}/get-list-of-all-bank-branch-available-in?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}`;
 		async function fetchData() {
 			const response = await fetch(branchesInDistrictURL);
 			const allBranches = await response.json();
-			console.log(allBranches);
-			setBranches(allBranches.data);
+			setBranches(['Branch', ...allBranches.data.map((bank) => bank.branch)]);
 		}
 		if (selectedDistrict) {
 			fetchData();
 		}
-	}, [selectedBank, selectedState, selectedDistrict, selectedBranch]);
+	}, [selectedDistrict]);
 
 	useEffect(() => {
-		const branchDetailsURL = `http://localhost:3001/get-bank?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}&branch=${selectedBranch}`;
+		const branchDetailsURL = `${url}/get-bank?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}&branch=${selectedBranch}`;
 		async function fetchData() {
 			const response = await fetch(branchDetailsURL);
 			const branchDetails = await response.json();
-			console.log(branchDetails);
 			setBranchDetails(branchDetails.data);
 		}
 		if (selectedBranch) {
 			fetchData();
 		}
-	}, [selectedBank, selectedState, selectedDistrict, selectedBranch]);
+	}, [selectedBranch]);
 	return (
 		<div>
+			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
 			<h1>Banks</h1>
 			<select
 				id='banksName'
 				onChange={(event) => {
+					setStates(['State']);
+					setDistricts(['District']);
+					setBranches(['Branch']);
+					setBranchDetails({});
 					handleSelect(event, setSelectedBank);
 				}}>
-				<option value='notSelected'>Select Bank Name</option>
-				{banks.map((bank, index) => (
-					<option value={bank._id} key={index}>
-						{bank._id}
-					</option>
-				))}
+				<Options array={banks.map((bank) => bank.bank_name || bank)} />
 			</select>
 
 			<h1>States</h1>
 			<select
 				id='stateName'
 				onChange={(event) => {
+					setDistricts(['District']);
+					setBranches(['Branch']);
+					setBranchDetails({});
 					handleSelect(event, setSelectedState);
 				}}>
-				{states.length ? null : (
-					<option value='bankNotSelected'>Select a bank first</option>
-				)}
-				{states.length ? (
-					<option value='stateNotSelected'>Select a state</option>
-				) : null}
-				{states.map((state, index) => (
-					<option value={state} key={index}>
-						{state}
-					</option>
-				))}
+				<Options array={states} />
 			</select>
 
 			<h1>Districts</h1>
 			<select
 				id='districtName'
 				onChange={(event) => {
+					setBranches(['Branch']);
+					setBranchDetails({});
 					handleSelect(event, setSelectedDistrict);
 				}}>
-				{districts.length ? null : (
-					<option value='bankNotSelected'>District</option>
-				)}
-				{districts.length ? (
-					<option value='stateNotSelected'>Select a district</option>
-				) : null}
-				{districts.map((district, index) => (
-					<option value={district} key={index}>
-						{district}
-					</option>
-				))}
+				<Options array={districts} />
 			</select>
 
 			<h1>Branches</h1>
 			<select
 				id='branchName'
-				onChange={(event) => handleSelect(event, setSelectedBranch)}>
-				{branches.length ? null : (
-					<option value='bankNotSelected'>Branch</option>
-				)}
-				{branches.length ? (
-					<option value='stateNotSelected'>Select a branch</option>
-				) : null}
-				{branches.map((branch, index) => (
-					<option value={branch.name} key={index}>
-						{branch}
-					</option>
-				))}
+				onChange={(event) => {
+					handleSelect(event, setSelectedBranch);
+				}}>
+				<Options array={branches} />
 			</select>
 
 			<h1>Branch Details</h1>
