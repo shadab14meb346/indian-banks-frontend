@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Options from '../common/Options';
-import Header from '../common/Header';
+import NameTag from '../common/NameTag';
+import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
 const localURL = 'http://localhost:3001';
 
@@ -93,10 +94,12 @@ const Banks = () => {
 		}
 	}, [selectedBranch]);
 	return (
-		<div>
+		<div className='outer-container'>
 			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
-			<h1>Banks</h1>
+
+			<NameTag tagName='Select a bank' />
 			<select
+				// className='select'
 				id='banksName'
 				onChange={(event) => {
 					setStates(['State']);
@@ -108,8 +111,9 @@ const Banks = () => {
 				<Options array={banks.map((bank) => bank.bank_name || bank)} />
 			</select>
 
-			<h1>States</h1>
+			<NameTag tagName='Select A State' />
 			<select
+				// className='select'
 				id='stateName'
 				onChange={(event) => {
 					setDistricts(['District']);
@@ -120,8 +124,9 @@ const Banks = () => {
 				<Options array={states} />
 			</select>
 
-			<h1>Districts</h1>
+			<NameTag tagName='Districts' />
 			<select
+				// className='select'
 				id='districtName'
 				onChange={(event) => {
 					setBranches(['Branch']);
@@ -131,8 +136,9 @@ const Banks = () => {
 				<Options array={districts} />
 			</select>
 
-			<h1>Branches</h1>
+			<NameTag tagName='Branches' />
 			<select
+				// className='select'
 				id='branchName'
 				onChange={(event) => {
 					handleSelect(event, setSelectedBranch);
@@ -140,17 +146,17 @@ const Banks = () => {
 				<Options array={branches} />
 			</select>
 
-			<h1>Branch Details</h1>
+			<NameTag tagName='Branch Details' />
 			<div>
 				{Object.entries(branchDetails).map((element) => {
 					const [key, value] = element;
-					return (
+					return key !== '_id' ? (
 						<div key={key}>
 							<p>
 								<b>{key}&nbsp;</b>: &nbsp;<span>{value}</span>
 							</p>
 						</div>
-					);
+					) : null;
 				})}
 			</div>
 		</div>

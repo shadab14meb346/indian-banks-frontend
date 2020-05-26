@@ -8,6 +8,7 @@ const NavigationBar = () => {
 			<span>Search By Bank Name</span>
 			<span>Search For Branch Name</span>
 			<span>Search By IFSC Code</span>
+			<span>Get APIs</span>
 		</div>
 	);
 };
