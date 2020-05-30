@@ -1,0 +1,50 @@
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #11455d;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+}
+
+.sidenav p {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #ffffff;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+	color: red;
+}
+.sidenav-toggle {
+	font-size: 30px;
+	background-color: #11455d;
+	color: #fff;
+}
+.sidenav-toggle :hover {
+	cursor: pointer;
+}
+.sidenav-toggle {
+	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.sidenav-toggle {
+		display: flex;
+	}
+	.sidenav {
+		padding-top: 15px;
+	}
+}
