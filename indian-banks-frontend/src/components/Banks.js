@@ -97,7 +97,7 @@ const Banks = () => {
 		<div className='outer-container'>
 			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
 
-			<NameTag tagName='Select a bank' />
+			<NameTag tagName='Banks' />
 			<select
 				// className='select'
 				id='banksName'
@@ -111,7 +111,7 @@ const Banks = () => {
 				<Options array={banks.map((bank) => bank.bank_name || bank)} />
 			</select>
 
-			<NameTag tagName='Select A State' />
+			<NameTag tagName='States' />
 			<select
 				// className='select'
 				id='stateName'
@@ -147,7 +147,7 @@ const Banks = () => {
 			</select>
 
 			<NameTag tagName='Branch Details' />
-			<div>
+			<div className='branch-details'>
 				{Object.entries(branchDetails).map((element) => {
 					const [key, value] = element;
 					return key !== '_id' ? (

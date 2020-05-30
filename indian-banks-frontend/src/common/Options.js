@@ -1,8 +1,8 @@
 import React from 'react';
-
+import '../styles/options.scss';
 const Options = ({ array }) => {
 	return array.map((element, index) => (
-		<option value={element} key={index}>
+		<option className='option' value={element} key={index}>
 			{element}
 		</option>
 	));

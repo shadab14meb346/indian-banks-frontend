@@ -1,14 +1,21 @@
 select {
-	margin-bottom: 15px;
+	margin-bottom: 0.5em;
 	width: 50%;
 	background: none;
 	padding: 3px;
 	border-radius: 5px;
 }
 .outer-container {
-	margin-left: 100px;
-	margin-right: 100px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+.branch-details {
+	font-size: 0.8rem;
+	margin: 0 25%;
+	text-transform: capitalize;
+}
+.branch-details p {
+	margin: 0.2em;
 }
