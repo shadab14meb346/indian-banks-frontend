@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Options from '../common/Options';
 import NameTag from '../common/NameTag';
+import Loading from '../common/Loading';
 import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
 const localURL = 'http://localhost:3001';
@@ -102,13 +103,18 @@ const Banks = () => {
 				// className='select'
 				id='banksName'
 				onChange={(event) => {
-					setStates(['State']);
-					setDistricts(['District']);
-					setBranches(['Branch']);
+					setStates(['Loading...']);
+					setDistricts(['Select a state first']);
+					setBranches(['Select a district first']);
 					setBranchDetails({});
+					setSelectedBranch(null);
 					handleSelect(event, setSelectedBank);
 				}}>
-				<Options array={banks.map((bank) => bank.bank_name || bank)} />
+				{banks.length === 1 ? (
+					<option>Loading...</option>
+				) : (
+					<Options array={banks.map((bank) => bank.bank_name || bank)} />
+				)}
 			</select>
 
 			<NameTag tagName='States' />
@@ -116,12 +122,17 @@ const Banks = () => {
 				// className='select'
 				id='stateName'
 				onChange={(event) => {
-					setDistricts(['District']);
-					setBranches(['Branch']);
+					setDistricts(['Loading...']);
+					setBranches(['Select a district first']);
 					setBranchDetails({});
+					setSelectedBranch(null);
 					handleSelect(event, setSelectedState);
 				}}>
-				<Options array={states} />
+				{states.length === 1 ? (
+					<option>{states[0]}</option>
+				) : (
+					<Options array={states} />
+				)}
 			</select>
 
 			<NameTag tagName='Districts' />
@@ -129,11 +140,16 @@ const Banks = () => {
 				// className='select'
 				id='districtName'
 				onChange={(event) => {
-					setBranches(['Branch']);
+					setBranches(['Loading...']);
 					setBranchDetails({});
+					setSelectedBranch(null);
 					handleSelect(event, setSelectedDistrict);
 				}}>
-				<Options array={districts} />
+				{districts.length === 1 ? (
+					<option>{districts[0]}</option>
+				) : (
+					<Options array={districts} />
+				)}
 			</select>
 
 			<NameTag tagName='Branches' />
@@ -143,22 +159,32 @@ const Banks = () => {
 				onChange={(event) => {
 					handleSelect(event, setSelectedBranch);
 				}}>
-				<Options array={branches} />
+				{branches.length === 1 ? (
+					<option>{branches[0]}</option>
+				) : (
+					<Options array={branches} />
+				)}
 			</select>
-
+			{console.log(selectedBranch)}
 			<NameTag tagName='Branch Details' />
-			<div className='branch-details'>
-				{Object.entries(branchDetails).map((element) => {
-					const [key, value] = element;
-					return key !== '_id' ? (
-						<div key={key}>
-							<p>
-								<b>{key}&nbsp;</b>: &nbsp;<span>{value}</span>
-							</p>
-						</div>
-					) : null;
-				})}
-			</div>
+			{selectedBranch ? (
+				!Object.keys(branchDetails).length ? (
+					<Loading />
+				) : (
+					<div className='branch-details'>
+						{Object.entries(branchDetails).map((element) => {
+							const [key, value] = element;
+							return key !== '_id' ? (
+								<div key={key}>
+									<p>
+										<b>{key}&nbsp;</b>: &nbsp;<span>{value}</span>
+									</p>
+								</div>
+							) : null;
+						})}
+					</div>
+				)
+			) : null}
 		</div>
 	);
 };
