@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import Options from '../common/Options';
 import NameTag from '../common/NameTag';
 import Loading from '../common/Loading';
 import bankNames from '../util/bankNames';
+import LoadingModel from '../common/LoadingModel';
+import { loading, getBankDetails, branchSelected } from '../actions/main';
 import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
 const localURL = 'http://localhost:3001';
@@ -26,7 +29,7 @@ const Fetch = ({ url, children }) => {
 	return null;
 };
 
-const Banks = () => {
+const Banks = ({ dispatch }) => {
 	const [banks, setBanks] = useState(bankNames);
 	const [states, setStates] = useState(['Select a bank first']);
 	const [districts, setDistricts] = useState(['Select a state first']);
@@ -89,6 +92,8 @@ const Banks = () => {
 		async function fetchData() {
 			const response = await fetch(branchDetailsURL);
 			const branchDetails = await response.json();
+			dispatch(loading(false));
+			dispatch(getBankDetails(branchDetails.data));
 			setBranchDetails(branchDetails.data);
 		}
 		if (selectedBranch) {
@@ -109,6 +114,7 @@ const Banks = () => {
 					setBranches(['Select a district first']);
 					setBranchDetails({});
 					setSelectedBranch(null);
+					dispatch(branchSelected(false));
 					handleSelect(event, setSelectedBank);
 				}}>
 				{banks.length === 1 ? (
@@ -127,6 +133,7 @@ const Banks = () => {
 					setBranches(['Select a district first']);
 					setBranchDetails({});
 					setSelectedBranch(null);
+					dispatch(branchSelected(false));
 					handleSelect(event, setSelectedState);
 				}}>
 				{states.length === 1 ? (
@@ -144,6 +151,7 @@ const Banks = () => {
 					setBranches(['Loading...']);
 					setBranchDetails({});
 					setSelectedBranch(null);
+					dispatch(branchSelected(false));
 					handleSelect(event, setSelectedDistrict);
 				}}>
 				{districts.length === 1 ? (
@@ -158,6 +166,8 @@ const Banks = () => {
 				// className='select'
 				id="branchName"
 				onChange={(event) => {
+					dispatch(loading(true));
+					dispatch(branchSelected(true));
 					handleSelect(event, setSelectedBranch);
 				}}>
 				{branches.length === 1 ? (
@@ -166,11 +176,11 @@ const Banks = () => {
 					<Options array={branches} />
 				)}
 			</select>
-			{console.log(selectedBranch)}
+			{/* {console.log(selectedBranch)}
 			<NameTag tagName="Branch Details" />
 			{selectedBranch ? (
 				!Object.keys(branchDetails).length ? (
-					<Loading />
+					<LoadingModel />
 				) : (
 					<div className="branch-details">
 						{Object.entries(branchDetails).map((element) => {
@@ -185,9 +195,16 @@ const Banks = () => {
 						})}
 					</div>
 				)
-			) : null}
+			) : null} */}
 		</div>
 	);
 };
+const mapStateToProps = (state) => {
+	return {
+		loading: state.main.loading,
+		bankDetails: state.main.bankDetails,
+		branchSelected: state.main.branchSelected
+	};
+};
 
-export default Banks;
+export default connect(mapStateToProps)(Banks);

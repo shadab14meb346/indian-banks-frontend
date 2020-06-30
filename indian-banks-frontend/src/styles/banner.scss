@@ -1,0 +1,22 @@
+header {
+	border-bottom: 1px solid #ccc;
+}
+.banner-content {
+	display: flex;
+	// width: 100%;
+	align-items: center;
+	margin: 0 4rem;
+	justify-content: space-between;
+}
+.logo {
+	color: #2eabe6;
+}
+.links a {
+	color: #666666;
+	text-decoration: none;
+	padding: 1em;
+}
+a:hover {
+	background-color: #2eabe6;
+	color: #ffffff;
+}

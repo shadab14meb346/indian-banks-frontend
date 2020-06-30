@@ -12,15 +12,25 @@ import NavigationBar from './common/NavigationBar';
 import UserGuide from './common/UserGuide';
 import SideNav from './common/SideNav';
 import Footer from './common/Footer';
+import Banner from './common/Banner';
+import BankName from './common/BankName';
+import MainSection from './common/MainSection';
 import './styles/app.scss';
 const App = () => {
 	return (
 		<div className="main">
 			<div style={{ display: 'flex' }}>
-				<SideNav />
-				<Header />
+				{/* <SideNav />
+				<Header /> */}
+				{/* <Banner />
+				<BankName /> */}
 			</div>
 			<div>
+				<Banner />
+				<BankName />
+				<MainSection />
+			</div>
+			{/* <div>
 				<Router>
 					<NavigationBar />
 				</Router>
@@ -28,7 +38,7 @@ const App = () => {
 
 			<UserGuide />
 			<Banks />
-			<Footer />
+			<Footer /> */}
 		</div>
 	);
 };

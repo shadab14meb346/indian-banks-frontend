@@ -1,16 +1,19 @@
 select {
 	margin-bottom: 0.5em;
-	width: 50%;
+	width: 100%;
 	background: none;
-	padding: 3px;
-	border-radius: 5px;
+	// padding: 3px;
+	// border-radius: 5px;
+	border: none;
+	border-bottom: 1px solid #ccc;
 }
 .outer-container {
 	width: 100%;
 	height: calc(100vh - 11rem);
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: left;
+	margin-top: 2rem;
 }
 .branch-details {
 	font-size: 0.8rem;

@@ -1,0 +1,44 @@
+.card {
+	width: 60%;
+	height: 70%;
+	background: #fff;
+	margin: 1.7rem 0;
+	// margin-top: 5.45rem;
+	// margin-right: 9.5rem;
+	border: 1px solid #ccc;
+	box-shadow: 5px 10px 18px #103c80;
+}
+.card h3 {
+	margin: 0;
+	padding: 0.3rem;
+	background: #dfebfb;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	font-weight: normal;
+}
+.key {
+	color: #3f3d56;
+	font-weight: bold;
+	margin: 5rem 0;
+}
+.card div {
+	margin-top: 1rem;
+}
+.content {
+	padding: 0 1rem;
+}
+.card-content {
+	padding: 0 1rem;
+}
+.value {
+	font-size: 0.9rem;
+	color: #152f57;
+	font-weight: 500;
+}
+img {
+	width: 25px;
+	height: 25px;
+	border-radius: 5px;
+	margin: 0 0.5rem;
+}
