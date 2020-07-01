@@ -19,7 +19,7 @@ const BankDetails = ({ branchSelected, loading, bankDetails }) => {
 		<div className="card">
 			{/* <img src="../images/sbi.co.in.png" /> */}
 			<h3>
-				<img src="https://i.ibb.co/Bs8FTkk/sbi-co-in.png" alt="sbi-co-in"></img>
+				{/* <img src="https://i.ibb.co/Bs8FTkk/sbi-co-in.png" alt="sbi-co-in"></img> */}
 				{bank_name} ({ifsc})
 			</h3>
 			<div className="card-content">
