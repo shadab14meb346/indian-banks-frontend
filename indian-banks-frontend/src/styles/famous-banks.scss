@@ -1,0 +1,22 @@
+.famous-banks-container {
+	display: flex;
+	flex-flow: wrap;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.famous-banks-container_item {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 29%;
+	height: 2rem;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin: 0.3rem;
+	padding: 0.3rem;
+}
+.famous-banks-container_item:hover {
+	cursor: pointer;
+	box-shadow: 1px 1px 5px #103c80;
+}

@@ -5,6 +5,7 @@ import NameTag from '../common/NameTag';
 import Loading from '../common/Loading';
 import bankNames from '../util/bankNames';
 import LoadingModel from '../common/LoadingModel';
+import FamousBanks from './FamousBanks';
 import { loading, getBankDetails, branchSelected } from '../actions/main';
 import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
@@ -123,7 +124,7 @@ const Banks = ({ dispatch }) => {
 					<Options array={banks.map((bank) => bank.bank_name || bank)} />
 				)}
 			</select>
-
+			<FamousBanks />
 			<NameTag tagName="States" />
 			<select
 				// className='select'
