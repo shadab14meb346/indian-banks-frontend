@@ -1,0 +1,39 @@
+.bank-by-ifsc {
+	color: rgba(5, 47, 95, 1);
+}
+.bank-by-ifsc h3 {
+	font-size: 1.5rem;
+	font-weight: 600;
+	// margin-bottom: 5px;
+}
+.bank-by-ifsc-content {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.5rem;
+	border-bottom: 1px solid #ccc;
+	padding-left: 0;
+}
+.bank-by-ifsc-content-item p {
+	margin: 0;
+	padding: 0;
+	padding-bottom: 0.5rem;
+}
+.bank-by-ifsc-content-item input {
+	border: none;
+	color: rgba(5, 47, 95, 1);
+	font-weight: bold;
+	outline: none;
+}
+.bank-by-ifsc-content button {
+	background: rgba(25, 150, 255, 1);
+	color: white;
+	font-size: 1.3rem;
+	// font-weight: bold;
+	border-radius: 3px;
+	letter-spacing: normal;
+	width: 30%;
+	font-family: 'Open Sans', Serif;
+}
+.error {
+	color: red;
+}

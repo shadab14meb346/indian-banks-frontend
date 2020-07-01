@@ -6,6 +6,7 @@ import Loading from '../common/Loading';
 import bankNames from '../util/bankNames';
 import LoadingModel from '../common/LoadingModel';
 import FamousBanks from './FamousBanks';
+import BankByIFSC from './BankByIFSC';
 import { loading, getBankDetails, branchSelected } from '../actions/main';
 import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
@@ -40,6 +41,8 @@ const Banks = ({ dispatch }) => {
 	const [selectedDistrict, setSelectedDistrict] = useState(null);
 	const [selectedBranch, setSelectedBranch] = useState(null);
 	const [branchDetails, setBranchDetails] = useState({});
+	const [inputIFSC, setInputIFSC] = useState(null);
+	const [error, setError] = useState(null);
 	useEffect(() => {
 		async function fetchData() {
 			const response = await fetch(allBanksURL);
@@ -87,7 +90,6 @@ const Banks = ({ dispatch }) => {
 			fetchData();
 		}
 	}, [selectedDistrict]);
-
 	useEffect(() => {
 		const branchDetailsURL = `${url}/get-bank?bank_name=${selectedBank}&state=${selectedState}&district=${selectedDistrict}&branch=${selectedBranch}`;
 		async function fetchData() {
@@ -104,7 +106,6 @@ const Banks = ({ dispatch }) => {
 	return (
 		<div className="outer-container">
 			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
-
 			<NameTag tagName="Banks" />
 			<select
 				// className='select'
@@ -124,7 +125,7 @@ const Banks = ({ dispatch }) => {
 					<Options array={banks.map((bank) => bank.bank_name || bank)} />
 				)}
 			</select>
-			<FamousBanks />
+			{/* <FamousBanks /> */}
 			<NameTag tagName="States" />
 			<select
 				// className='select'
@@ -143,7 +144,6 @@ const Banks = ({ dispatch }) => {
 					<Options array={states} />
 				)}
 			</select>
-
 			<NameTag tagName="Districts" />
 			<select
 				// className='select'
@@ -161,7 +161,6 @@ const Banks = ({ dispatch }) => {
 					<Options array={districts} />
 				)}
 			</select>
-
 			<NameTag tagName="Branches" />
 			<select
 				// className='select'
@@ -177,6 +176,14 @@ const Banks = ({ dispatch }) => {
 					<Options array={branches} />
 				)}
 			</select>
+
+			<BankByIFSC
+				inputIFSC={inputIFSC}
+				setError={setError}
+				error={error}
+				setInputIFSC={setInputIFSC}
+				dispatch={dispatch}
+			/>
 			{/* {console.log(selectedBranch)}
 			<NameTag tagName="Branch Details" />
 			{selectedBranch ? (
