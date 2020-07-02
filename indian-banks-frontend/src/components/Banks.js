@@ -103,29 +103,32 @@ const Banks = ({ dispatch }) => {
 			fetchData();
 		}
 	}, [selectedBranch]);
+	const resetStates = () => {
+		setStates(['Loading...']);
+		setDistricts(['Select a state first']);
+		setBranches(['Select a district first']);
+		setBranchDetails({});
+		setSelectedBranch(null);
+		dispatch(branchSelected(false));
+	};
 	return (
 		<div className="outer-container">
 			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
 			<NameTag tagName="Banks" />
 			<select
 				// className='select'
+				value={selectedBank}
 				id="banksName"
 				onChange={(event) => {
-					setStates(['Loading...']);
-					setDistricts(['Select a state first']);
-					setBranches(['Select a district first']);
-					setBranchDetails({});
-					setSelectedBranch(null);
-					dispatch(branchSelected(false));
+					resetStates();
 					handleSelect(event, setSelectedBank);
 				}}>
-				{banks.length === 1 ? (
-					<option>Loading...</option>
-				) : (
-					<Options array={banks.map((bank) => bank.bank_name || bank)} />
-				)}
+				<Options array={banks.map((bank) => bank.bank_name || bank)} />
 			</select>
-			{/* <FamousBanks /> */}
+			<FamousBanks
+				setSelectedBank={setSelectedBank}
+				resetStates={resetStates}
+			/>
 			<NameTag tagName="States" />
 			<select
 				// className='select'
