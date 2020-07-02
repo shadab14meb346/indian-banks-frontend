@@ -7,10 +7,13 @@ const BankByIFSC = ({ dispatch, setError, inputIFSC, error, setInputIFSC }) => {
 			setError('Invalid code');
 			return;
 		}
-		const url = `https://indian-banks-apis.herokuapp.com/get-bank-details?ifsccode=${IFSC}`;
+		dispatch(loading(true));
+		dispatch(branchSelected(true));
+		const url = `https://indian-banks-apis.herokuapp.com/get-bank-details?ifsccode=${IFSC.toUpperCase()}`;
 		const response = await fetch(url);
 		const data = await response.json();
 		dispatch(loading(false));
+		dispatch(branchSelected(true));
 		dispatch(getBankDetails(data.data));
 	};
 	return (
