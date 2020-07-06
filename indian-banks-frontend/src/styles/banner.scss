@@ -20,3 +20,14 @@ a:hover {
 	background-color: #2eabe6;
 	color: #ffffff;
 }
+
+@media only screen and (max-width: 600px) {
+	.banner-content {
+		margin: 0 1rem;
+	}
+	.links a {
+		// color: #666666;
+		// text-decoration: none;
+		padding: 0.2em;
+	}
+}

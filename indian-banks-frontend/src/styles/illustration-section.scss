@@ -7,3 +7,10 @@
 	align-items: top;
 	// box-shadow: 0 0 5px rgba(0, 0, 0);
 }
+
+@media only screen and (max-width: 600px) {
+	.illustration-section {
+		width: 100%;
+		background: none;
+	}
+}
