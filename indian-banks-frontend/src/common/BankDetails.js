@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import LoadingModel from '../common/LoadingModel';
 import '../styles/bank-details.scss';
 const BankDetails = ({ branchSelected, loading, bankDetails }) => {
-	console.log({ branchSelected, loading, bankDetails });
 	const {
 		bank_name,
 		ifsc,
@@ -17,9 +16,7 @@ const BankDetails = ({ branchSelected, loading, bankDetails }) => {
 		<LoadingModel />
 	) : !loading ? (
 		<div className="card">
-			{/* <img src="../images/sbi.co.in.png" /> */}
 			<h3>
-				{/* <img src="https://i.ibb.co/Bs8FTkk/sbi-co-in.png" alt="sbi-co-in"></img> */}
 				{bank_name} ({ifsc})
 			</h3>
 			<div className="card-content">

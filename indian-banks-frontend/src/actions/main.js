@@ -14,7 +14,6 @@ export function getBankDetails(bank) {
 }
 
 export function branchSelected(value) {
-	console.log('branchSelected called');
 	return {
 		type: BRANCH_SELECTED,
 		branchSelected: value

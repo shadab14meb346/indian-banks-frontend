@@ -26,4 +26,3 @@ export default {
 		fullName: 'CANARA BANK'
 	}
 };
-// export default bankLogos;

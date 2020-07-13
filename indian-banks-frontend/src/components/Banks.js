@@ -2,33 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Options from '../common/Options';
 import NameTag from '../common/NameTag';
-import Loading from '../common/Loading';
 import bankNames from '../util/bankNames';
-import LoadingModel from '../common/LoadingModel';
 import FamousBanks from './FamousBanks';
 import BankByIFSC from './BankByIFSC';
 import { loading, getBankDetails, branchSelected } from '../actions/main';
 import '../styles/banks.scss';
 const deployedURL = 'https://indian-banks-apis.herokuapp.com';
-const localURL = 'http://localhost:3001';
-
 const url = deployedURL;
 const allBanksURL = `${url}/get-all-banks-name-list`;
 
 const handleSelect = (event, setSelectFunction) => {
 	setSelectFunction(event.target.value);
-};
-
-const Fetch = ({ url, children }) => {
-	useEffect(() => {
-		async function fetchData() {
-			const response = await fetch(url);
-			const data = await response.json();
-			children(data.data);
-		}
-		fetchData();
-	});
-	return null;
 };
 
 const Banks = ({ dispatch }) => {
@@ -113,10 +97,8 @@ const Banks = ({ dispatch }) => {
 	};
 	return (
 		<div className="outer-container">
-			{/* <Fetch url={allBanksURL}>{setBanks}</Fetch> */}
 			<NameTag tagName="Banks" />
 			<select
-				// className='select'
 				value={selectedBank}
 				id="banksName"
 				onChange={(event) => {
@@ -131,7 +113,6 @@ const Banks = ({ dispatch }) => {
 			/>
 			<NameTag tagName="States" />
 			<select
-				// className='select'
 				id="stateName"
 				onChange={(event) => {
 					setDistricts(['Loading...']);
@@ -149,7 +130,6 @@ const Banks = ({ dispatch }) => {
 			</select>
 			<NameTag tagName="Districts" />
 			<select
-				// className='select'
 				id="districtName"
 				onChange={(event) => {
 					setBranches(['Loading...']);
@@ -166,7 +146,6 @@ const Banks = ({ dispatch }) => {
 			</select>
 			<NameTag tagName="Branches" />
 			<select
-				// className='select'
 				id="branchName"
 				onChange={(event) => {
 					dispatch(loading(true));
@@ -187,26 +166,6 @@ const Banks = ({ dispatch }) => {
 				setInputIFSC={setInputIFSC}
 				dispatch={dispatch}
 			/>
-			{/* {console.log(selectedBranch)}
-			<NameTag tagName="Branch Details" />
-			{selectedBranch ? (
-				!Object.keys(branchDetails).length ? (
-					<LoadingModel />
-				) : (
-					<div className="branch-details">
-						{Object.entries(branchDetails).map((element) => {
-							const [key, value] = element;
-							return key !== '_id' ? (
-								<div key={key}>
-									<p>
-										<b>{key}&nbsp;</b>: &nbsp;<span>{value}</span>
-									</p>
-								</div>
-							) : null;
-						})}
-					</div>
-				)
-			) : null} */}
 		</div>
 	);
 };
